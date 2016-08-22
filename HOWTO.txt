@@ -1,0 +1,173 @@
+Creating war file
+=================
+Create .war file back from your existing folder.
+Using this command
+cd /to/your/folder/location
+jar -cvf my_web_app.war *
+
+RESTful WAR File deployment
+============================
+
+Deploying toTomcat
+----------------------
+
+Tomcat Manager
+Open the Tomcat Manager application.
+Select WAR file for upload
+ In the deploy section use the 'Browse...' button to specify the REST .war file location.
+Click the 'Deploy' button.
+The Tomcat application manager page should automatically refresh to display the REST .war file in the Applications list.
+
+
+Building and running the Project using Maven
+---------------------------------------
+
+1) Right CLick on the project in eclipse .Go to the Run As menu item and do 
+
+  Maven clean 
+  
+2) And then repeat the step 1 and do a
+  
+  Maven install
+  
+
+To Run the application:
+-------------------------
+
+Right click on the project, go to the Run As Menu Item and select run on the server option.
+
+
+Accessing the Spring REST Service
+=================================
+
+Ad Service adding new ad.(POST method)
+http://{Host}/AdSrevice/ad/
+
+
+Ad Service retrieving an ad by partnerId(GET method)
+http://{Host}/AdSrevice/ad/{parterId}
+
+
+Ad Service retrieving all ads (GET method)
+http://{Host}/AdSrevice/ad/
+
+
+Testing Ad Services using POSTMAN Crome plug in
+=====================================================
+
+ Testing POST method
+ ----------------------
+ 
+ Creating PartnerId DDD
+ SEND
+URL:http://localhost:8080/AdService/ad/
+Method: POST
+Body(raw):
+{
+    "partnerId": "DDD" ,
+     "duration": 8500000,
+    "adContent":"DDD ad campaign"
+}
+Type:JSON(Application/json)
+
+RESPONSE
+Header:AdServiceHeader →Ad Campaign created
+Content-Length →0
+Date →Mon, 22 Aug 2016 13:19:51 GMT
+Location →http://localhost:8080/AdService/ad/DDD
+Server →Apache-Coyote/1.1
+Status:201 Created
+
+Creating PartnerId BBB
+SEND
+URL:http://localhost:8080/AdService/ad/
+Method: POST
+Body(raw):
+ {
+    "partnerId": "BBB" ,
+     "duration": 8,
+    "adContent":"BBB ad campaign"
+}
+Type:JSON(Application/json)
+
+RESPONSE
+Header:AdServiceHeader →Ad Campaign created
+Content-Length →0
+Date →Mon, 22 Aug 2016 13:19:51 GMT
+Location →http://localhost:8080/AdService/ad/BBB
+Server →Apache-Coyote/1.1
+Status:201 Created
+
+Creating PartnerId BBB again
+SEND:
+URL:http://localhost:8080/AdService/ad/
+Method: POST
+Body(raw):
+ {
+    "partnerId": "BBB" ,
+     "duration": 8,
+    "adContent":"BBB ad campaign"
+}
+Type:JSON(Application/json)
+
+RESPONSE
+Header: AdServiceHeader →Ad Campaign already exist
+Content-Length →0
+Date →Mon, 22 Aug 2016 13:22:59 GMT
+Server →Apache-Coyote/1.1
+Status:409 Conflict
+
+
+Testing GET method
+------------------
+retrieving PartnerId DDD(Existing)
+SEND:
+URL:http://localhost:8080/AdService/ad/DDD
+Method: GET
+Type:JSON(Application/json)
+
+RESPONSE:
+Header:
+AdServiceHeader →Ad Campaigns is found
+Content-Type →application/json
+Date →Mon, 22 Aug 2016 13:38:54 GMT
+Server →Apache-Coyote/1.1
+Transfer-Encoding →chunked
+Status:200 OK
+
+BODY:
+{
+  "partnerId": "DDD",
+  "duration": 8500000,
+  "adContent": "DDD ad campaign"
+}
+
+
+retrieving PartnerId BBB(Expired)
+SEND:
+URL:http://localhost:8080/AdService/ad/BBB
+Method: GET
+Type:JSON(Application/json)
+
+RESPONSE:
+Header:
+AdServiceHeader →Ad Campaigns is expired
+Content-Length →0
+Date →Mon, 22 Aug 2016 13:28:41 GMT
+Server →Apache-Coyote/1.1
+Status:409 Conflict
+
+
+retrieving PartnerId BBBN(Non Existing)
+SEND:
+URL:http://localhost:8080/AdService/ad/BBBN
+Method: GET
+Type:JSON(Application/json)
+
+RESPONSE:
+Header:
+AdServiceHeader →Partner has no Ad Campaigns
+Content-Length →0
+Date →Mon, 22 Aug 2016 13:42:05 GMT
+Server →Apache-Coyote/1.1
+Status:404 Not found

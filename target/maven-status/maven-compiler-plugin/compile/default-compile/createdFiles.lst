@@ -1,0 +1,8 @@
+com\dhishani\excersise\service\ManyAdsServiceImpl.class
+com\dhishani\excersise\controller\AdController.class
+com\dhishani\excersise\service\AdServiceImpl.class
+com\dhishani\excersise\service\AdResponse.class
+com\dhishani\excersise\service\ManyAdsService.class
+com\dhishani\excersise\controller\ManyAdsController.class
+com\dhishani\excersise\service\Ad.class
+com\dhishani\excersise\service\AdSrevice.class
