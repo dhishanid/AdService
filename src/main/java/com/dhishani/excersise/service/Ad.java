@@ -51,6 +51,30 @@ public class Ad implements Serializable {
 	        return "Partner with ID =" + partnerId + ", with campaign duration=" + duration ;
 	    }
 	
-	
+	@Override
+	public int hashCode() {
+
+		int result = partnerId.hashCode();
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Ad))
+			return false;
+		Ad other = (Ad) obj;
+		if (this.partnerId != other.partnerId)
+			return false;
+		if (this.duration != other.duration)
+			return false;
+		if (!this.adContent.equals(other.adContent))
+			return false;
+
+		return true;
+	}
+
 
 }
